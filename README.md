@@ -12,6 +12,14 @@ A browser extension for Chrome and Microsoft Edge, built with Vue 3, Tailwind CS
 - Centralized default-enabled feature management for future features
 - Build, validation, and zip packaging workflow included
 
+## Demo Video
+
+Add your demo video here.
+
+- Video link: `TBD`
+- Preview image / GIF: `TBD`
+- Notes: `TBD`
+
 ## Project Structure
 
 ```text
