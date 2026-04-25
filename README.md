@@ -4,6 +4,10 @@ English | [繁體中文](./README_ZH.md)
 
 A browser extension for Chrome and Microsoft Edge, built with Vue 3, Tailwind CSS, Vite, and Manifest V3.
 
+## Demo Video
+
+https://github.com/user-attachments/assets/5bcff155-1d24-4f7f-8353-468b8acb84bd
+
 ## Current Features
 
 - Draggable image resize in HackMD split editor mode preview
@@ -11,14 +15,6 @@ A browser extension for Chrome and Microsoft Edge, built with Vue 3, Tailwind CS
 - Modular feature toggles in the popup UI
 - Centralized default-enabled feature management for future features
 - Build, validation, and zip packaging workflow included
-
-## Demo Video
-
-Add your demo video here.
-
-- Video link: `TBD`
-- Preview image / GIF: `TBD`
-- Notes: `TBD`
 
 ## Project Structure
 
