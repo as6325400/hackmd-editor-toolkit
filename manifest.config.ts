@@ -6,7 +6,7 @@ export default defineManifest({
   short_name: 'Editor Toolkit',
   description:
     'Chrome/Edge extension for HackMD with toggleable features, starting with draggable image resize that writes HackMD markdown size syntax back into the editor.',
-  version: '0.1.0',
+  version: '0.1.1',
   minimum_chrome_version: '114',
   permissions: ['storage'],
   host_permissions: ['https://hackmd.io/*'],
