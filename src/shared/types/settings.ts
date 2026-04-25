@@ -1,4 +1,4 @@
-export type FeatureId = 'hackmdImageResize' | 'showResizeHints'
+export type FeatureId = 'hackmdImageResize' | 'showResizeHints' | 'hackmdTableInsert'
 
 export type FeatureDefinition = {
   id: FeatureId

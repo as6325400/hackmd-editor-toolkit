@@ -1,15 +1,13 @@
 import { computed, ref } from 'vue'
 import { featureDefinitions } from '../../shared/config/features'
+import { DEFAULT_SETTINGS } from '../../shared/storage/defaults'
 import { getSettings, updateFeatureEnabled } from '../../shared/storage/settings'
 import type { FeatureId } from '../../shared/types/settings'
 
 const loading = ref(true)
 const savingFeature = ref<FeatureId | null>(null)
 const errorMessage = ref('')
-const settings = ref<Record<FeatureId, boolean>>({
-  hackmdImageResize: true,
-  showResizeHints: true,
-})
+const settings = ref<Record<FeatureId, boolean>>({ ...DEFAULT_SETTINGS.features })
 
 export function useSettings() {
   const features = computed(() =>
@@ -28,7 +26,7 @@ export function useSettings() {
       const stored = await getSettings()
       settings.value = stored.features
     } catch (error) {
-      errorMessage.value = error instanceof Error ? error.message : '無法讀取設定'
+      errorMessage.value = error instanceof Error ? error.message : '讀取設定失敗'
     } finally {
       loading.value = false
     }
@@ -42,7 +40,7 @@ export function useSettings() {
       const next = await updateFeatureEnabled(featureId, enabled)
       settings.value = next.features
     } catch (error) {
-      errorMessage.value = error instanceof Error ? error.message : '無法儲存設定'
+      errorMessage.value = error instanceof Error ? error.message : '更新設定失敗'
     } finally {
       savingFeature.value = null
     }

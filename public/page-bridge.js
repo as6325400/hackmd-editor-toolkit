@@ -109,6 +109,22 @@
     }
   }
 
+  function indexFromPos(text, pos) {
+    if (!pos || typeof pos.line !== 'number' || typeof pos.ch !== 'number') {
+      return text.length
+    }
+
+    const lines = text.split('\n')
+    const line = Math.max(0, Math.min(pos.line, lines.length - 1))
+    let index = 0
+
+    for (let currentLine = 0; currentLine < line; currentLine += 1) {
+      index += lines[currentLine].length + 1
+    }
+
+    return index + Math.max(0, Math.min(pos.ch, lines[line].length))
+  }
+
   document.addEventListener(REQUEST_EVENT, async (event) => {
     const detail = event.detail
     if (!detail?.id || !detail?.type) {
@@ -156,6 +172,32 @@
         const next = `${current.slice(0, start)}${text}${current.slice(end)}`
         editor.setValue(next)
         restoreUiState(editor, state)
+        respond({ ok: true, result: true })
+        return
+      }
+
+      if (detail.type === 'insertAtCursor') {
+        const text = detail.payload?.text ?? ''
+        const current = editor.getValue()
+        const state = captureUiState(editor)
+        const cursor = getCursor(editor)
+
+        if (typeof editor.replaceRange === 'function' && cursor) {
+          const insertIndex = indexFromPos(current, cursor)
+          editor.replaceRange(text, cursor, cursor)
+          state.cursor = posFromIndex(`${current.slice(0, insertIndex)}${text}`, insertIndex + text.length)
+          restoreUiState(editor, state)
+          if (typeof editor.focus === 'function') editor.focus()
+          respond({ ok: true, result: true })
+          return
+        }
+
+        const insertIndex = cursor ? indexFromPos(current, cursor) : current.length
+        const next = `${current.slice(0, insertIndex)}${text}${current.slice(insertIndex)}`
+        editor.setValue(next)
+        state.cursor = posFromIndex(next, insertIndex + text.length)
+        restoreUiState(editor, state)
+        if (typeof editor.focus === 'function') editor.focus()
         respond({ ok: true, result: true })
         return
       }
