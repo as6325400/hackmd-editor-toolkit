@@ -50,7 +50,29 @@ npm run check
 npm run zip
 ```
 
-The output archive will be generated at `artifacts/hackmd-editor-toolkit.zip`.
+The output archives will be generated at:
+
+- `artifacts/hackmd-editor-toolkit-v<version>.zip`
+- `artifacts/hackmd-editor-toolkit.zip`
+
+## Release
+
+CI runs `npm run check` on pull requests and pushes to `main`.
+
+To publish a GitHub Release with the packaged extension zip:
+
+1. Update the version in both `package.json` and `manifest.config.ts`
+2. Run `npm run check`
+3. Create and push a matching tag, such as `v0.1.0`
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The release workflow validates that the tag matches the package and manifest version, builds the extension, and uploads the versioned zip to GitHub Releases.
+
+Chrome Web Store and Microsoft Edge Add-ons publishing is intentionally manual for now, so store listing copy, screenshots, permissions, and review timing can be checked before submission.
 
 ## Load as an Unpacked Extension
 

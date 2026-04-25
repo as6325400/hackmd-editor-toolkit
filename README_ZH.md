@@ -48,7 +48,29 @@ npm run check
 npm run zip
 ```
 
-輸出檔案會在 `artifacts/hackmd-editor-toolkit.zip`。
+輸出檔案會在：
+
+- `artifacts/hackmd-editor-toolkit-v<version>.zip`
+- `artifacts/hackmd-editor-toolkit.zip`
+
+## 發佈
+
+CI 會在 pull request 與推送到 `main` 時執行 `npm run check`。
+
+若要建立 GitHub Release 並附上打包好的 extension zip：
+
+1. 同步更新 `package.json` 與 `manifest.config.ts` 的版本號
+2. 執行 `npm run check`
+3. 建立並推送相同版本的 tag，例如 `v0.1.0`
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Release workflow 會確認 tag、package version、manifest version 一致，接著 build extension 並把版本化 zip 上傳到 GitHub Releases。
+
+Chrome Web Store 與 Microsoft Edge Add-ons 目前先保留手動上傳，方便正式送出前檢查商店文案、截圖、權限說明與審核時機。
 
 ## 載入方式
 

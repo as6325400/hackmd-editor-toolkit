@@ -8,9 +8,10 @@
     "build": "vue-tsc -b && vite build",
     "typecheck": "vue-tsc -b",
     "lint": "eslint .",
+    "validate:version": "node scripts/validate-version.mjs",
     "validate:build": "node scripts/validate-build.mjs",
     "zip": "npm run build && npm run validate:build && node scripts/zip-dist.mjs",
-    "check": "npm run typecheck && npm run lint && npm run build && npm run validate:build"
+    "check": "npm run validate:version && npm run typecheck && npm run lint && npm run build && npm run validate:build"
   },
   "dependencies": {
     "vue": "^3.5.32"

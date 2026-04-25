@@ -1,13 +1,15 @@
 import { createWriteStream } from 'node:fs'
-import { mkdir } from 'node:fs/promises'
+import { copyFile, mkdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import archiver from 'archiver'
 
+const packageJson = JSON.parse(await readFile('package.json', 'utf8'))
 const outDir = path.resolve('artifacts')
 await mkdir(outDir, { recursive: true })
 
+const versionedArchivePath = path.join(outDir, `hackmd-editor-toolkit-v${packageJson.version}.zip`)
 const archivePath = path.join(outDir, 'hackmd-editor-toolkit.zip')
-const output = createWriteStream(archivePath)
+const output = createWriteStream(versionedArchivePath)
 const archive = archiver('zip', { zlib: { level: 9 } })
 
 await new Promise((resolve, reject) => {
@@ -18,4 +20,7 @@ await new Promise((resolve, reject) => {
   archive.finalize()
 })
 
+await copyFile(versionedArchivePath, archivePath)
+
+console.log(`Created ${versionedArchivePath}`)
 console.log(`Created ${archivePath}`)
