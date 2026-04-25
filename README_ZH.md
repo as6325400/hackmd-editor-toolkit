@@ -2,6 +2,10 @@
 
 支援 Chrome 與 Microsoft Edge 的瀏覽器擴充套件，使用 Vue 3、Tailwind CSS、Vite 與 Manifest V3 建立。
 
+## 展示影片
+
+https://github.com/user-attachments/assets/5bcff155-1d24-4f7f-8353-468b8acb84bd
+
 ## 目前功能
 
 - HackMD 雙欄編輯模式預覽圖片拖曳縮放
@@ -9,14 +13,6 @@
 - Popup 內提供模組化功能開關
 - 新功能可透過集中設定檔管理預設是否啟用
 - 提供 build、validate、zip 流程
-
-## 展示影片
-
-你可以把影片資訊放在這裡。
-
-- 影片連結：`TBD`
-- 預覽圖片 / GIF：`TBD`
-- 備註：`TBD`
 
 ## 專案結構
 
