@@ -1,13 +1,16 @@
+import type { LanguageCode, TranslationKey } from '../i18n/messages'
+
 export type FeatureId = 'hackmdImageResize' | 'showResizeHints' | 'hackmdTableInsert'
 
 export type FeatureDefinition = {
   id: FeatureId
-  title: string
-  description: string
+  titleKey: TranslationKey
+  descriptionKey: TranslationKey
   defaultEnabled: boolean
 }
 
 export type ExtensionSettings = {
   schemaVersion: number
+  language: LanguageCode
   features: Record<FeatureId, boolean>
 }

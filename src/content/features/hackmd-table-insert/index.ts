@@ -1,4 +1,5 @@
-import type { FeatureId } from '../../../shared/types/settings'
+﻿import type { ExtensionSettings, FeatureId } from '../../../shared/types/settings'
+import { getMessage, type TranslationKey } from '../../../shared/i18n/messages'
 
 const FEATURE_ID: FeatureId = 'hackmdTableInsert'
 const BUTTON_ATTR = 'data-hackmd-table-insert-button'
@@ -15,13 +16,15 @@ let observer: MutationObserver | null = null
 let bridgeReadyPromise: Promise<void> | null = null
 let currentPicker: HTMLElement | null = null
 const managedButtonControllers = new WeakMap<HTMLElement, AbortController>()
+let latestSettings: ExtensionSettings | null = null
 
 export const hackmdTableInsertFeature = {
   id: FEATURE_ID,
   matches(location: Location) {
     return location.hostname === 'hackmd.io'
   },
-  run() {
+  run(settings: ExtensionSettings) {
+    latestSettings = settings
     injectStyles()
     void ensurePageBridgeInjected()
     mountToolbarButton()
@@ -164,7 +167,7 @@ function mountToolbarButton() {
   button.type = 'button'
   button.setAttribute(BUTTON_ATTR, 'true')
   button.setAttribute(FALLBACK_BUTTON_ATTR, 'true')
-  button.title = '插入表格'
+  button.title = t('content.tableInsert.buttonLabel')
   button.innerHTML = `
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
       <rect x="3" y="5" width="18" height="14" rx="1.5"></rect>
@@ -234,9 +237,9 @@ function setupManagedButton(button: HTMLElement) {
   const controller = new AbortController()
   managedButtonControllers.set(button, controller)
   button.setAttribute(BUTTON_ATTR, 'true')
-  button.setAttribute('aria-label', button.getAttribute('aria-label') || '插入表格')
+  button.setAttribute('aria-label', button.getAttribute('aria-label') || t('content.tableInsert.buttonLabel'))
   button.setAttribute('aria-expanded', 'false')
-  button.title = button.title || '插入表格'
+  button.title = button.title || t('content.tableInsert.buttonLabel')
 
   button.addEventListener(
     'pointerdown',
@@ -286,7 +289,7 @@ function openPicker(button: HTMLElement) {
       const cell = document.createElement('button')
       cell.type = 'button'
       cell.className = 'hackmd-table-insert-cell'
-      cell.setAttribute('aria-label', `${column} 欄 ${row} 列`)
+      cell.setAttribute('aria-label', `${column} x ${row}`)
       cell.dataset.row = String(row)
       cell.dataset.column = String(column)
       cell.addEventListener('pointerenter', () => updateSelection(picker, column, row))
@@ -456,3 +459,8 @@ function ensurePageBridgeInjected(): Promise<void> {
 
   return bridgeReadyPromise
 }
+
+function t(key: TranslationKey) {
+  return getMessage(latestSettings?.language ?? 'en', key)
+}
+

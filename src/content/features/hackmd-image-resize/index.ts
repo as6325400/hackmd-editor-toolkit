@@ -1,4 +1,5 @@
-import type { ExtensionSettings, FeatureId } from '../../../shared/types/settings'
+﻿import type { ExtensionSettings, FeatureId } from '../../../shared/types/settings'
+import { getMessage, type TranslationKey } from '../../../shared/i18n/messages'
 
 const FEATURE_ID: FeatureId = 'hackmdImageResize'
 const OVERLAY_ATTR = 'data-hackmd-resize-overlay'
@@ -184,12 +185,12 @@ function refreshResizeHandles(settings: ExtensionSettings) {
 
     const overlay = document.createElement('span')
     overlay.setAttribute(OVERLAY_ATTR, 'true')
-    overlay.setAttribute('data-label', '拖曳右下角以調整寬度')
+    overlay.setAttribute('data-label', t('content.imageResize.defaultLabel'))
 
     const handle = document.createElement('button')
     handle.type = 'button'
     handle.className = 'hackmd-resize-handle'
-    handle.title = '拖曳調整圖片大小'
+    handle.title = t('content.imageResize.handleTitle')
 
     handle.addEventListener('pointerdown', (event) => {
       beginResize(event, image, wrapper)
@@ -283,12 +284,12 @@ function beginResize(event: PointerEvent, image: HTMLImageElement, wrapper: HTML
       )
 
       if (didWrite) {
-        overlayLabel(wrapper, `${session.lastAppliedWidth}px 已寫回 markdown`)
+        overlayLabel(wrapper, `${session.lastAppliedWidth}${t('content.imageResize.saved')}`)
       } else {
-        overlayLabel(wrapper, `${session.lastAppliedWidth}px（無法寫回）`)
+        overlayLabel(wrapper, `${session.lastAppliedWidth}${t('content.imageResize.writeFailed')}`)
       }
     } else if (session.lastAppliedWidth !== null) {
-      overlayLabel(wrapper, `${session.lastAppliedWidth}px（僅預覽，尚未寫回）`)
+      overlayLabel(wrapper, `${session.lastAppliedWidth}${t('content.imageResize.matchFailed')}`)
     }
 
     window.removeEventListener('pointermove', move)
@@ -536,3 +537,8 @@ function ensurePageBridgeInjected(): Promise<void> {
 function debug(message: string, payload?: unknown) {
   console.debug(DEBUG_PREFIX, message, payload)
 }
+
+function t(key: TranslationKey) {
+  return getMessage(latestSettings?.language ?? 'en', key)
+}
+

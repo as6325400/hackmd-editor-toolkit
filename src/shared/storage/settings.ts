@@ -1,6 +1,7 @@
 import { DEFAULT_SETTINGS } from './defaults'
 import { normalizeSettings } from './migrations'
 import type { ExtensionSettings, FeatureId } from '../types/settings'
+import type { LanguageCode } from '../i18n/messages'
 
 const STORAGE_KEY = 'settings'
 const storageArea = chrome.storage.sync
@@ -11,7 +12,7 @@ export async function ensureDefaultSettings(): Promise<ExtensionSettings> {
   const hasStoredSettings = STORAGE_KEY in existing
   const hasAllFeatureKeys = Object.keys(DEFAULT_SETTINGS.features).every((key) => key in settings.features)
 
-  if (!hasStoredSettings || !hasAllFeatureKeys) {
+  if (!hasStoredSettings || !hasAllFeatureKeys || settings.schemaVersion !== DEFAULT_SETTINGS.schemaVersion) {
     await storageArea.set({ [STORAGE_KEY]: settings })
   }
 
@@ -33,6 +34,17 @@ export async function updateFeatureEnabled(
       ...current.features,
       [featureId]: enabled,
     },
+  }
+
+  await storageArea.set({ [STORAGE_KEY]: next })
+  return next
+}
+
+export async function updateLanguage(language: LanguageCode): Promise<ExtensionSettings> {
+  const current = await getSettings()
+  const next: ExtensionSettings = {
+    ...current,
+    language,
   }
 
   await storageArea.set({ [STORAGE_KEY]: next })

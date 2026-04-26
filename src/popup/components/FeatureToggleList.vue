@@ -9,6 +9,8 @@ defineProps<{
     enabled: boolean
     saving: boolean
   }>
+  offLabel: string
+  onLabel: string
 }>()
 
 const emit = defineEmits<{
@@ -21,7 +23,7 @@ const emit = defineEmits<{
     <li
       v-for="feature in features"
       :key="feature.id"
-      class="rounded-2xl border border-slate-800 bg-slate-900/80 p-4 shadow-lg shadow-black/20"
+      class="rounded-lg border border-slate-800 bg-slate-900/80 p-4 shadow-lg shadow-black/20"
     >
       <label class="flex cursor-pointer items-start gap-3">
         <input
@@ -41,7 +43,7 @@ const emit = defineEmits<{
               class="rounded-full px-2 py-0.5 text-[10px] font-medium"
               :class="feature.enabled ? 'bg-emerald-500/15 text-emerald-300' : 'bg-slate-700 text-slate-300'"
             >
-              {{ feature.enabled ? 'ON' : 'OFF' }}
+              {{ feature.enabled ? onLabel : offLabel }}
             </span>
           </div>
           <p class="mt-1 text-xs leading-5 text-slate-300">

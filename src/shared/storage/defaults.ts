@@ -7,6 +7,7 @@ const featureDefaults = featureDefinitions.reduce<Record<FeatureId, boolean>>((a
 }, {} as Record<FeatureId, boolean>)
 
 export const DEFAULT_SETTINGS: ExtensionSettings = {
-  schemaVersion: 1,
+  schemaVersion: 2,
+  language: 'zh-TW',
   features: featureDefaults,
 }
