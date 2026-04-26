@@ -235,10 +235,11 @@ function beginResize(event: PointerEvent, image: HTMLImageElement, wrapper: HTML
 
   const rect = image.getBoundingClientRect()
   const startX = event.clientX
-  const startWidth = rect.width
+  const startWidth = Math.max(40, Math.round(rect.width || image.width || image.naturalWidth || 40))
+  const maxWidth = getMaxResizeWidth(image, startWidth)
   wrapper.classList.add(ACTIVE_CLASS)
 
-  const naturalRatio = rect.width > 0 ? rect.height / rect.width : getImageRatio(image)
+  const naturalRatio = rect.width > 0 && rect.height > 0 ? rect.height / rect.width : getImageRatio(image)
 
   const applyPreviewWidth = (width: number) => {
     wrapper.style.width = `${width}px`
@@ -254,7 +255,7 @@ function beginResize(event: PointerEvent, image: HTMLImageElement, wrapper: HTML
 
   const move = (moveEvent: PointerEvent) => {
     const deltaX = moveEvent.clientX - startX
-    const nextWidth = clamp(Math.round(startWidth + deltaX), 40, Math.round(rect.width * 4))
+    const nextWidth = clamp(Math.round(startWidth + deltaX), 40, maxWidth)
     applyPreviewWidth(nextWidth)
     overlayLabel(wrapper, `${nextWidth}px`)
 
@@ -423,6 +424,13 @@ function getImageRatio(image: HTMLImageElement) {
   const width = image.naturalWidth || image.width || 1
   const height = image.naturalHeight || image.height || 1
   return height / width
+}
+
+function getMaxResizeWidth(image: HTMLImageElement, startWidth: number) {
+  const previewWidth = getPreviewRoot()?.getBoundingClientRect().width ?? 0
+  const naturalWidth = image.naturalWidth || image.width || 0
+  const viewportWidth = window.innerWidth || 0
+  return Math.round(Math.max(800, startWidth * 8, naturalWidth * 4, previewWidth * 2, viewportWidth * 2))
 }
 
 function buildReplacementForWidth(match: MarkdownImageMatch, width: number) {
