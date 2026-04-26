@@ -20,4 +20,10 @@ export const featureDefinitions: FeatureDefinition[] = [
     descriptionKey: 'feature.hackmdTableInsert.description',
     defaultEnabled: true,
   },
+  {
+    id: 'previewSourceLocator',
+    titleKey: 'feature.previewSourceLocator.title',
+    descriptionKey: 'feature.previewSourceLocator.description',
+    defaultEnabled: true,
+  },
 ]

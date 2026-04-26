@@ -31,6 +31,9 @@ const englishMessages = {
   'feature.hackmdTableInsert.title': 'HackMD table picker',
   'feature.hackmdTableInsert.description':
     'Adds a Word-style table picker to the HackMD editor toolbar and inserts the selected markdown table at the cursor.',
+  'feature.previewSourceLocator.title': 'Preview source locator',
+  'feature.previewSourceLocator.description':
+    'Highlights the matching markdown line in the editor when you select text in the HackMD preview pane.',
   'content.imageResize.defaultLabel': 'Drag to resize image',
   'content.imageResize.handleTitle': 'Resize image',
   'content.imageResize.saved': 'px written to markdown',
@@ -63,6 +66,9 @@ export const messages: Record<LanguageCode, Record<TranslationKey, string>> = {
     'feature.hackmdTableInsert.title': 'HackMD 表格拉選工具',
     'feature.hackmdTableInsert.description':
       '在 HackMD 編輯工具列加入 Word 式表格拉選器，並在目前游標位置插入選定大小的 Markdown 表格。',
+    'feature.previewSourceLocator.title': '預覽內容定位',
+    'feature.previewSourceLocator.description':
+      '在 HackMD 預覽區框選文字時，高亮左側最可能對應的 Markdown 行，方便快速找到要修改的位置。',
     'content.imageResize.defaultLabel': '拖曳調整圖片大小',
     'content.imageResize.handleTitle': '調整圖片大小',
     'content.imageResize.saved': 'px 已寫回 Markdown',
