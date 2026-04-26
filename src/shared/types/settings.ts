@@ -7,6 +7,7 @@ export type FeatureDefinition = {
   titleKey: TranslationKey
   descriptionKey: TranslationKey
   defaultEnabled: boolean
+  parentId?: FeatureId
 }
 
 export type ExtensionSettings = {

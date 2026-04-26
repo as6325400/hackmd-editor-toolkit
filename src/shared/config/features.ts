@@ -12,6 +12,7 @@ export const featureDefinitions: FeatureDefinition[] = [
     titleKey: 'feature.showResizeHints.title',
     descriptionKey: 'feature.showResizeHints.description',
     defaultEnabled: true,
+    parentId: 'hackmdImageResize',
   },
   {
     id: 'hackmdTableInsert',

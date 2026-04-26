@@ -21,6 +21,7 @@ export function useSettings() {
       ...feature,
       description: t(feature.descriptionKey),
       enabled: settings.value.features[feature.id],
+      parentId: feature.parentId,
       saving: savingFeature.value === feature.id,
       title: t(feature.titleKey),
     })),
