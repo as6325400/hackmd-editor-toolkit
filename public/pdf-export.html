@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HackMD PDF Export</title>
+    <link rel="stylesheet" href="pdf-export.css" />
+  </head>
+  <body>
+    <main class="export-shell">
+      <header class="export-toolbar">
+        <div>
+          <p class="export-kicker">HackMD Editor Toolkit</p>
+          <h1 id="document-title">PDF Export</h1>
+        </div>
+        <button id="print-button" type="button">匯出成 PDF</button>
+      </header>
+
+      <article id="document" class="markdown-document"></article>
+      <p id="error-message" class="error-message" hidden></p>
+    </main>
+
+    <script src="pdf-export.js"></script>
+  </body>
+</html>

@@ -26,4 +26,10 @@ export const featureDefinitions: FeatureDefinition[] = [
     descriptionKey: 'feature.previewSourceLocator.description',
     defaultEnabled: true,
   },
+  {
+    id: 'pdfExportButton',
+    titleKey: 'feature.pdfExportButton.title',
+    descriptionKey: 'feature.pdfExportButton.description',
+    defaultEnabled: true,
+  },
 ]

@@ -1,4 +1,4 @@
-import { bootstrapFeatures } from './bootstrap'
+import { bootstrapFeatures, getMarkdownForPdfExport } from './bootstrap'
 import { getSettings } from '../shared/storage/settings'
 import { isHackMdPage } from '../shared/utils/browser'
 
@@ -20,6 +20,22 @@ async function main() {
     }
 
     void applyCurrentSettings()
+  })
+
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message?.type !== 'getMarkdownForPdfExport') {
+      return false
+    }
+
+    void getMarkdownForPdfExport()
+      .then(sendResponse)
+      .catch((error) => {
+        sendResponse({
+          error: error instanceof Error ? error.message : String(error),
+        })
+      })
+
+    return true
   })
 }
 

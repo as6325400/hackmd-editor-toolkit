@@ -1,6 +1,11 @@
 import type { LanguageCode, TranslationKey } from '../i18n/messages'
 
-export type FeatureId = 'hackmdImageResize' | 'showResizeHints' | 'hackmdTableInsert' | 'previewSourceLocator'
+export type FeatureId =
+  | 'hackmdImageResize'
+  | 'showResizeHints'
+  | 'hackmdTableInsert'
+  | 'previewSourceLocator'
+  | 'pdfExportButton'
 
 export type FeatureDefinition = {
   id: FeatureId
